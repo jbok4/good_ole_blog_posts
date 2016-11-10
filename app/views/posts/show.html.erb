@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @post.content %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.user_id %>
+</p>
+
+<ul>
+  <% @post.comments.each do |c| %>
+    <li>
+      <%= "#{c.user.email} says: #{c.content}"%>
+    </li>
+  <% end %>
+</ul>
+
+<%= form_for @post.comments.build do |f| %>
+  <%= f.hidden_field :post_id %>
+  <%= f.label :content %>
+  <%= f.text_field :content %>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+
+
+
+<script type="text/javascript">
+  $('form').submit(function(event){
+    debugger
+    event.preventDefault();
+    event.stopPropagation();
+    var data = $(this).serialize()
+    var url = $(this).attr("action")
+    $.post(url, data) // promise object
+      .done(function(data){
+        var li = '<li>' + data.user.email + ' says: ' + data.content + '</li>'
+
+        $('ul').append(li)
+      })
+      .fail(function(error){
+        alert(error.responseText);
+      })
+      this.reset();
+  })
+  setInterval(function() {
+    $.get('/posts/' + <%= @post.id %> + '.json')
+    .done(function(data){
+      var comments = data.comments
+      var string = ''
+      comments.forEach(function(comment){
+       string += '<li>' + comment.user.email + ' says: ' + comment.content + '</li>'
+      })
+      $('ul').html(string);
+    })
+  }, 2000);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

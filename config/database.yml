@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: good_ole_blog_posts_development
+  database: good_ole_blog_posts_development2
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -57,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: good_ole_blog_posts_test
+  database: good_ole_blog_posts_test2
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: good_ole_blog_posts_production
+  database: good_ole_blog_posts_production2
   username: good_ole_blog_posts
   password: <%= ENV['GOOD_OLE_BLOG_POSTS_DATABASE_PASSWORD'] %>
